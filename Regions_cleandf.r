@@ -140,7 +140,7 @@ figuere1<-ggplot(df_system_composition,
   )
 
 ggsave(
-  filename = "figure_1_journey_composition.png",
+  filename = "Produced_figures/regions/figure_1_journey_composition.png",
   width = 8,
   height = 5,
   dpi = 300
@@ -208,11 +208,12 @@ ggplot(df_system_year_abs,
   theme_minimal() +
   theme(legend.position = "bottom")
 ggsave(
-  filename = "/Users/juanfelipepatinocastano/Desktop/Coursework-Introduction-to-data-science&dataviz/Porduced_figures/regions/figure_2_system_level_journeys_by_type.png",
+  filename = "Produced_figures/regions/figure_2_system_level_journeys_by_type.png",
   plot = last_plot(),
   width = 8,
   height = 5,
-  dpi = 300)
+  dpi = 300
+)
 #_____________________________________________________________
 # RQ2 – Structurally dominant destination regions
 # Inter-regional journey shares

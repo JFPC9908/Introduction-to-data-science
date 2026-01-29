@@ -1,0 +1,23 @@
+"Region","journey_scope","total_journeys"
+"East England","Between regions",3358987
+"East England","Within region",753031
+"East Midlands","Between regions",557090
+"East Midlands","Within region",225699
+"London","Between regions",8963492
+"London","Within region",10918378
+"North East","Between regions",222785
+"North East","Within region",147684
+"North West","Between regions",775230
+"North West","Within region",1891929
+"Scotland","Between regions",204699
+"Scotland","Within region",1984456
+"South East","Between regions",4949480
+"South East","Within region",2015708
+"South West","Between regions",603470
+"South West","Within region",537365
+"Wales","Between regions",226574
+"Wales","Within region",458681
+"West Midlands","Between regions",646491
+"West Midlands","Within region",1031623
+"Yorkshire and the Humber","Between regions",602690
+"Yorkshire and the Humber","Within region",920293

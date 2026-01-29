@@ -19,7 +19,7 @@ library(fixest)
 #_____________________________
 #Data Loading 
 #_____________________________
-df <- read.csv("/Users/juanfelipepatinocastano/Desktop/Coursework-Introduction-to-data-science&dataviz/Sources/table-1415-time-series-of-passenger-entries-and-exits-and-interchanges-by-station (2) - 1415a_Entries_and_Exits.csv")
+df <- read.csv("Sources/table-1415-time-series-of-passenger-entries-and-exits-and-interchanges-by-station (2) - 1415a_Entries_and_Exits.csv")
 str(df)
 summary(df)
 dim(df) 
@@ -119,7 +119,7 @@ stations_per_region_table
 
 write.csv(
   stations_per_region_table,
-  "/Users/juanfelipepatinocastano/Desktop/Coursework-Introduction-to-data-science&dataviz/Produced_tables/table_stations_per_region.csv",
+  "Produced_tables/stations_per_region_table.csv",
   row.names = FALSE
 )
 
@@ -205,7 +205,7 @@ ggplot(mean_usage_region,
     caption = "Mean annual passenger entries and exits per station. Source: ORR Table 1415A."
   ) +
   theme_minimal()
-out_fig <- "/Users/juanfelipepatinocastano/Desktop/Coursework-Introduction-to-data-science&dataviz/Porduced_figures"
+out_fig <- "Produced_figures"
 ggsave(
   filename = file.path(out_fig, "figure_3_mean_stations_entries_and_exits.png"),
   width = 8,

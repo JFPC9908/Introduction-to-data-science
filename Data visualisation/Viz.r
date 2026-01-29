@@ -97,6 +97,13 @@ Figure1 <- Figure1 +
   labs(title = "Figure 1") +
   theme(plot.title.position = "plot")
 Figure1
+ggsave(
+  filename = "Produced_figures/regions/figure_5_regional_share_total_journeys.png",
+  plot = Figure1,
+  width = 8,
+  height = 10,
+  dpi = 300
+)
 #-------------------------------------------------------------------
 # Visualisation 2 (Tiles heatmap)
 #-------------------------------------------------------------------
@@ -120,7 +127,7 @@ flows_share <- flows_hist %>%
   ) %>%
   ungroup()
 
-figuere2 <- ggplot(flows_share, aes(x = dest, y = orig, fill = share)) +
+figure2 <- ggplot(flows_share, aes(x = dest, y = orig, fill = share)) +
   geom_tile(color = "grey90") +
   # outline the strongest destination(s) per origin
   geom_tile(
@@ -144,10 +151,10 @@ figuere2 <- ggplot(flows_share, aes(x = dest, y = orig, fill = share)) +
     axis.text.x = element_text(angle = 90, hjust = 0.25),
     panel.grid = element_blank()
   )
-figure2 <- figuere2 +
+figure2 <- figure2 +
   labs(title = "Figure 2") +
   theme(plot.title.position = "plot")
-figuere2
+figure2
 # After having the visuzlaization a check is needed 
 top_dest_por_region <- flows_hist %>%
   group_by(orig) %>%
@@ -249,9 +256,12 @@ top_dest_por_region <- flows_hist %>%
 top_dest_por_region
 
 #______________________________________________________
-# Figure 3-provisional  
+# Figure 3 Regional map  
 #______________________________________________________
 
+library(sf)
+library(dplyr)
+library(ggplot2)
 
 itl1 <- st_read("Data visualisation/ITL1_JAN_2025_UK_BUC_7687044825815463778.geojson", quiet = TRUE) %>%
   st_make_valid()
@@ -310,8 +320,8 @@ ggplot(itl1_join) +
   theme_minimal() +
   theme(panel.grid = element_blank())
 
-
-#===========Now names ¡>
+library(dplyr)
+library(stringr)
 region_codes <- tibble::tribble(
   ~Region,                    ~code,
   "London",                   "LO",
@@ -326,7 +336,8 @@ region_codes <- tibble::tribble(
   "Wales",                    "WA",
   "Scotland",                 "SC"
 )
-
+library(sf)
+library(dplyr)
 
 itl1_map <- itl1_join %>%
   left_join(region_codes, by = "Region")
@@ -342,14 +353,12 @@ pts <- itl1_map %>%
 
 bbox <- st_bbox(itl1_map)
  
-figure3<-ggplot(itl1_map) +
+figure3 <-ggplot(itl1_map) +
   geom_sf(aes(fill = system_share), colour = "white", linewidth = 0.4) +
   geom_label(
     data = pts,
     aes(x = X, y = Y, label = code),
-    size = 2.0,
-    abel.padding = unit(0.12, "lines"), 
-  label.r = unit(0.08, "lines"),  
+    size = 2.6,
     label.size = 0,
     fill = "white",
     alpha = 0.7,
@@ -381,12 +390,22 @@ SC = Scotland"
     labels = percent_format(accuracy = 1),
     name = "Share of total journeys"
   ) +
-  labs(title = "Regional share of total rail journeys") +
+  labs(title = "Figure 5: Regional share of total rail journeys",
+caption = "Data source: Office of Rail and Road (ORR) Tables 1540–1590.") +
   theme_minimal() +
   theme(
-    axis.title = element_blank()
-
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank()
   )
+ggsave(
+  filename = "Produced_figures/regions/figure_5_regional_share_total_journeys.png",
+  plot = figure3,
+  width = 8,
+  height = 10,
+  dpi = 300
+)
 #______________________________________________________
 # Figure 4 Cluster of regions  
 #______________________________________________________
@@ -482,13 +501,16 @@ figuere4 <- ggplot() +
     axis.text.x = element_blank(),
     axis.ticks.x = element_blank()
   )
+dir.create("Produced_figures/regions", recursive = TRUE, showWarnings = FALSE)
+
 ggsave(
-  filename = "figure_4_regional_clustering.png",
+  filename = "Produced_figures/regions/figure_4_regional_clustering.png",
   plot = figuere4,
   width = 8,
   height = 6,
   dpi = 300
 )
+
 
 #______________________________________
 # Join t 

@@ -206,3 +206,63 @@ df_all_regions <- df_all_regions %>%
     sort = as.integer(Time.period)
   ) %>%
   select(-year_start)
+
+#______________________________
+## Join all long formated datasets into one 
+#______________________________
+
+df_all_regions <- bind_rows(
+  df_east_midlands_long,
+  df_east_england_long,
+  df_london_long,
+  df_north_east_long,
+  df_north_west_long,
+  df_scotland_long,
+  df_south_east_long,
+  df_south_west_long,
+  df_wales_long,
+  df_west_midlands_long,
+  df_yorkshire_humber_long
+)
+
+#________________________________
+# Quality check and re formating all information if needed 
+##_______________________________
+names(df_all_regions)
+head(df_all_regions$variable)
+
+df_all_regions$variable <- gsub("\\.", " ", df_all_regions$variable)
+unique(df_all_regions$variable)
+df_all_regions$variable <- sub("^X\\s+", "", df_all_regions$variable)
+df_all_regions$variable <- gsub("\\s+", " ", df_all_regions$variable)
+df_all_regions$variable <- trimws(df_all_regions$variable)
+unique(df_all_regions$variable)
+unique(df_all_regions$Time.period)
+
+names(df_all_regions)[names(df_all_regions) == "variable"] <- "type of journey"
+
+head(df_all_regions$value)
+df_all_regions$value_num <- as.numeric(gsub(",", "", df_all_regions$value))
+names(df_all_regions)[names(df_all_regions) == "value_num"] <- "amount of journeys (thousands)"
+Station_on_the_regions <- read.csv("df_stations_per_region.csv")
+df_all_regions <- df_all_regions %>%
+  mutate(
+    Region = gsub("East of England", "East England", Region),
+    `type of journey` = gsub("East of England", "East England", `type of journey`)
+  )
+df_all_regions <- df_all_regions %>%
+  mutate(
+    year_start = as.integer(sub(".*?(\\d{4}).*", "\\1", Time.period))
+  ) %>%
+  arrange(year_start, Time.period) %>%
+  mutate(
+    Time.period = factor(Time.period, levels = unique(Time.period)),
+    sort = as.integer(Time.period)
+  ) %>%
+  select(-year_start)
+
+# Df 
+
+write.csv(df_all_regions, "df_all_regions.csv", row.names = FALSE)
+
+write.csv(df_region_totals_clean, "df_region_totals_clean", row.names = FALSE)

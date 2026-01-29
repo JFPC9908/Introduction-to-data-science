@@ -1,0 +1,80 @@
+# Running the project (Reproducibility Guide)
+
+This repository is structured as a reproducible pipeline. All required input data lives inside `sources/`.  
+
+> Important: Run the **regional pipeline first**. Downstream steps assume the regional outputs already exist.
+
+---
+
+## 1) Repository structure
+
+- `sources/`  
+  Raw input data required to reproduce the project (ORR tables and spatial files).
+- `scripts/`  
+  R scripts organised by pipeline stage (ingest/clean → analysis/models → visualisations).
+- `Produced_tables/`  
+  Generated tables (cleaned datasets, modelling outputs, derived metrics).
+- `Produced_figures/`  
+  Generated figures (PNG/PDF) used in the report/GitHub Pages.
+
+---
+
+## 2) Data required in `sources/`
+
+To run the pipeline end-to-end, ensure `sources/` includes:
+
+### Regional ORR tables (mandatory)
+- ORR tables **1540–1590** (regional passenger journeys / journey scope)
+
+### Mapping files (only if you build maps)
+- e.g., ITL1/UK region boundaries (`.geojson` or shapefiles)
+
+### Optional (if you also run station-level analysis)
+- ORR station-level time series datasets (e.g., entries/exits by station)
+
+---
+
+## 3) Requirements
+
+### R / packages
+- R (>= 4.2 recommended)
+- Packages typically used in this project:
+  - tidyverse (dplyr, tidyr, ggplot2, readr, stringr)
+  - scales
+  - sf (for mapping)
+  - (optional) here (for robust paths)
+
+Install packages (run once):
+```r
+install.packages(c("dplyr","tidyr","ggplot2","readr","stringr","scales","sf","here"))
+
+
+GUIDE 
+
+Step A — Build the regional dataset (RUN FIRST)
+
+This is the entrypoint for all regional work.
+
+Run:
+	•	scripts/regionsdf.r
+
+What it does:
+	•	Reads ORR tables 1540–1590 from sources/
+	•	Builds the main regional dataset
+	•	Writes cleaned outputs to Produced_tables/
+
+Expected outputs (examples):
+	•	Produced_tables/df_all_regions.csv
+
+Once `scripts/regionsdf.r` has been run successfully, the outputs generated in `Produced_tables/`
+should be treated as the **main regional dataset** for the entire project.
+
+All subsequent regional analysis and visualisation scripts are designed to **read from these outputs**
+(not directly from the raw ORR tables in `sources/`). In other words:
+
+- `sources/` contains the raw inputs (ORR 1540–1590)
+- `scripts/regionsdf.r` builds and consolidates the regional dataset
+- `Produced_tables/` becomes the single source of truth (“main dataset”) for all region-based work
+-  examples of final plots and figures are exported to `Produced_figures/`
+
+

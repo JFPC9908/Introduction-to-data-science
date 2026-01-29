@@ -1,7 +1,13 @@
 .DS_Store
 *.csv
-Porduced_figures/
-Produced_tables/
+
+!df_long_27.csv
+!table_stations_per_region.csv
+!df_all_regions.csv
+!palma_ratio_pre_post_covid.csv
+!table_region_rank.csv
+
+
 
 
 

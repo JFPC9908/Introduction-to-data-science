@@ -539,11 +539,11 @@ all_figs
 
 all_figs <- ((Figure1 | figuere2) /
              (figure3 | figuere4)) +
-  plot_layout(guides = "keep", heights = c(1.2, 1.8))  # 🔑 más espacio abajo
+  plot_layout(guides = "keep", heights = c(1.2, 1.8))  # 
 all_figs
 figuere3 <- figuere3 & theme(
   plot.title.position = "plot",
-  plot.margin = margin(18, 6, 6, 6)   # 🔑 más aire arriba dentro
+  plot.margin = margin(18, 6, 6, 6)   # 
 )
 
 figuere4 <- figuere4 + theme(
